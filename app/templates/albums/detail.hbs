@@ -27,6 +27,8 @@
         <p><strong>Genre:</strong> {{@model.genre}}</p>
       {{/if}}
 
+        <p><strong>Average rating:</strong> {{@model.averagerating}}</p>
+
       <button type="button" {{on "click" this.removeAlbum}} class="btn-delete">
         Delete Album
       </button>

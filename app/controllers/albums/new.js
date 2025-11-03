@@ -38,6 +38,7 @@ export default class AlbumsNewController extends Controller {
       releasedate: this.newReleaseDate ? new Date(this.newReleaseDate) : null,
       cover: this.newCoverUrl,
       genre: this.newGenre,
+      averagerating: 0
     };
 
     const album = this.store.createRecord('album', attrs);

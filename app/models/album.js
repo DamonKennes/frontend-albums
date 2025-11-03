@@ -5,6 +5,8 @@ export default class AlbumModel extends Model {
   @attr('date') releasedate;
   @attr('string') cover;
   @attr('string') genre;
+  @attr('number') averagerating;
+
 
   @hasMany('artist', { async: true, inverse: 'albums' }) artists;
   @hasMany('rating', { async: true, inverse: 'album' }) ratings;
