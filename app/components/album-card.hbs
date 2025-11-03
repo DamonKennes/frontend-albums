@@ -1,0 +1,15 @@
+<LinkTo @route="albums.detail" @model={{@album}} class="album-card">
+  <div class="album-card-image flex">
+    {{#if @album.cover}}
+      <img src={{@album.cover}} alt={{@album.title}} />
+    {{else}}
+      <div class="album-card-placeholder">No Image</div>
+    {{/if}}
+  </div>
+  <div class="album-card-info">
+    <h3 class="album-card-title">{{@album.title}}</h3>
+    {{#each @album.artists as |artist|}}
+      <p class="album-card-artist">{{artist.name}}</p>
+    {{/each}}
+  </div>
+</LinkTo>

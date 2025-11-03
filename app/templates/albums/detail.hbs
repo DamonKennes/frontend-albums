@@ -1,0 +1,84 @@
+{{page-title @model.title}}
+
+<div class="album-detail">
+  <LinkTo @route="albums.index" class="back-link">← Back to Albums</LinkTo>
+
+  <div class="album-detail-header">
+    <div class="album-detail-image">
+      {{#if @model.cover}}
+        <img src={{@model.cover}} alt={{@model.title}} />
+      {{else}}
+        <div class="album-detail-placeholder">No Image</div>
+      {{/if}}
+    </div>
+
+    <div class="album-detail-info">
+      <h1>{{@model.title}}</h1>
+
+      {{#each @model.artists as |artist|}}
+        <h2 class="album-artist">{{artist.name}}</h2>
+      {{/each}}
+
+      {{#if @model.releasedate}}
+        <p><strong>Release Date:</strong> {{@model.releasedate}}</p>
+      {{/if}}
+
+      {{#if @model.genre}}
+        <p><strong>Genre:</strong> {{@model.genre}}</p>
+      {{/if}}
+
+      <button type="button" {{on "click" this.removeAlbum}} class="btn-delete">
+        Delete Album
+      </button>
+    </div>
+  </div>
+
+  <div class="album-ratings">
+    <h3>Ratings & Reviews</h3>
+
+    {{#if @model.ratings}}
+      <ul class="ratings-list">
+        {{#each @model.ratings as |rating|}}
+          <li class="rating-item">
+            <div class="rating-score">{{rating.score}}/5</div>
+            <div class="rating-text">{{rating.text}}</div>
+            {{#if rating.creationdate}}
+              <div class="rating-date">{{rating.creationdate}}</div>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>No ratings yet. Be the first to review this album!</p>
+    {{/if}}
+
+    <div class="add-rating-form">
+      <h4>Add Your Review</h4>
+      <form {{on "submit" this.addRating}}>
+        <div class="form-field">
+          <label for="rating-text">Review:</label>
+          <Input
+            @type="text"
+            @value={{this.newRatingText}}
+            id="rating-text"
+            placeholder="Write your review..."
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="rating-score">Score:</label>
+          <Input
+            @type="number"
+            @value={{this.newRatingScore}}
+            id="rating-score"
+            min="1"
+            max="5"
+          />
+          <span>/5</span>
+        </div>
+
+        <button type="submit">Add Review</button>
+      </form>
+    </div>
+  </div>
+</div>
