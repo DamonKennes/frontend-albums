@@ -70,7 +70,7 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>No ratings yet. Be the first to review this album!</p>
+      <p>{{if this.session.isAuthenticated "No ratings yet. Be the first to review this album!" "Login to read user reviews!"}}</p>
     {{/if}}
 
 
