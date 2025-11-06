@@ -6,4 +6,5 @@ export default class RatingModel extends Model {
   @attr('date') creationdate;
 
   @belongsTo('album', { async: true, inverse: 'ratings' }) album;
+  @belongsTo('gebruiker', { async: true, inverse: 'ratings' }) gebruiker;
 }

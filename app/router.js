@@ -11,4 +11,7 @@ Router.map(function () {
     this.route('new');
     this.route('detail', { path: '/:album_id' });
   });
+
+  this.route('login');
+  this.route('register');
 });

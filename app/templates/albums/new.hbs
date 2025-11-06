@@ -1,12 +1,11 @@
 {{page-title "Add New Album"}}
 
-<div class="album-new">
-  <h1>Add New Album</h1>
+<div>
   <LinkTo @route="albums.index" class="back-link">← Back to Albums</LinkTo>
 
   <form {{on "submit" this.createAlbum}} class="album-form">
     <div class="form-field">
-      <label for="album-title">Title *</label>
+      <label for="album-title">Title</label>
       <Input
         @type="text"
         @value={{this.newTitle}}
@@ -23,6 +22,7 @@
         @value={{this.newArtistName}}
         id="album-artist"
         placeholder="Radiohead"
+        required
       />
     </div>
 
@@ -33,6 +33,7 @@
         @value={{this.newReleaseDate}}
         id="album-release-date"
         placeholder="2000-10-02"
+        required
       />
     </div>
 
@@ -53,12 +54,13 @@
         @value={{this.newGenre}}
         id="album-genre"
         placeholder="rock"
+        required
       />
     </div>
 
-    <div class="form-actions">
-      <button type="submit" class="btn-primary">Create Album</button>
-      <button type="button" {{on "click" this.cancel}} class="btn-secondary">
+    <div>
+      <button type="submit" class="button">Create Album</button>
+      <button type="button" {{on "click" this.cancel}} class="button">
         Cancel
       </button>
     </div>

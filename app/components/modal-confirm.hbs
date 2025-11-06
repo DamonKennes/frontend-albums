@@ -1,0 +1,22 @@
+{{#if @isOpen}}
+  <div class="modal-overlay" {{on "click" @onCancel}}>
+    <div class="modal-content" {{on "click" this.stopPropagation}}>
+      <div class="modal-header">
+        <h2>{{@title}}</h2>
+      </div>
+
+      <div class="modal-body">
+        <p>{{@message}}</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="button button-confirm" {{on "click" @onConfirm}}>
+          {{if @confirmText @confirmText "Yes"}}
+        </button>
+        <button type="button" class="button button-cancel" {{on "click" @onCancel}}>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+{{/if}}

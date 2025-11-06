@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="header-container">
+    <LinkTo @route="albums.index" class="header-logo">
+      <h1>DoReMi</h1>
+    </LinkTo>
+
+    <nav class="header-nav">
+      {{#if this.session.isAuthenticated}}
+        <LinkTo @route="albums.new" class="nav-link">
+          Add Album
+        </LinkTo>
+        <MuLogout class="button"></MuLogout>
+      {{else}}
+        <LinkTo @route="login" class="nav-link">
+          Login
+        </LinkTo>
+        <LinkTo @route="register" class="nav-link">
+          Register
+        </LinkTo>
+      {{/if}}
+    </nav>
+  </div>
+</header>
+
+{{yield}}

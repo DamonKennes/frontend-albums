@@ -27,13 +27,25 @@
         <p><strong>Genre:</strong> {{@model.genre}}</p>
       {{/if}}
 
-        <p><strong>Average rating:</strong> {{@model.averagerating}}</p>
+      <p><strong>Average rating:</strong> {{@model.averagerating}}</p>
 
-      <button type="button" {{on "click" this.removeAlbum}} class="btn-delete">
-        Delete Album
-      </button>
+      {{#if this.session.isAuthenticated}}
+        <button type="button" {{on "click" this.showDeleteConfirmation}} class="button">
+          Delete Album
+        </button>
+      {{/if}}
+
     </div>
   </div>
+
+  <ModalConfirm
+    @isOpen={{this.showDeleteModal}}
+    @title="Delete Album"
+    @message="Are you sure you want to delete this album? This action cannot be undone and will also delete all ratings for this album."
+    @confirmText="Delete"
+    @onConfirm={{this.confirmDelete}}
+    @onCancel={{this.cancelDelete}}
+  />
 
   <div class="album-ratings">
     <h3>Ratings & Reviews</h3>
@@ -42,11 +54,18 @@
       <ul class="ratings-list">
         {{#each @model.ratings as |rating|}}
           <li class="rating-item">
-            <div class="rating-score">{{rating.score}}/5</div>
+            <div class="rating-score">
+              <StarRating @value={{rating.score}} @readOnly={{true}} />
+            </div>
             <div class="rating-text">{{rating.text}}</div>
             {{#if rating.creationdate}}
+              <div class="rating-date">{{rating.gebruiker.name}}</div>
               <div class="rating-date">{{rating.creationdate}}</div>
             {{/if}}
+            {{#if (this.checkRating rating)}}
+              <button class="button" {{on "click" (fn this.deleteRating rating)}}>Delete</button>
+            {{/if}}
+
           </li>
         {{/each}}
       </ul>
@@ -54,33 +73,32 @@
       <p>No ratings yet. Be the first to review this album!</p>
     {{/if}}
 
-    <div class="add-rating-form">
-      <h4>Add Your Review</h4>
-      <form {{on "submit" this.addRating}}>
-        <div class="form-field">
-          <label for="rating-text">Review:</label>
-          <Input
-            @type="text"
-            @value={{this.newRatingText}}
-            id="rating-text"
-            placeholder="Write your review..."
-          />
-        </div>
 
-        <div class="form-field">
-          <label for="rating-score">Score:</label>
-          <Input
-            @type="number"
-            @value={{this.newRatingScore}}
-            id="rating-score"
-            min="1"
-            max="5"
-          />
-          <span>/5</span>
-        </div>
+    {{#if this.session.isAuthenticated}}
+      {{#unless this.hasUserRating}}
+        <div class="add-rating-form">
+          <h4>Add Your Review</h4>
+          <form {{on "submit" this.addRating}}>
+            <div class="form-field">
+              <label for="rating-text">Review:</label>
+              <Input
+                @type="text"
+                @value={{this.newRatingText}}
+                id="rating-text"
+                placeholder="Write your review..."
+              />
+            </div>
 
-        <button type="submit">Add Review</button>
-      </form>
-    </div>
+            <div class="form-field">
+              <label for="rating-score">Score:</label>
+              <StarRating @value={{this.newRatingScore}} @onChange={{this.updateRatingScore}} />
+            </div>
+
+            <button type="submit" class="button">Add Review</button>
+          </form>
+        </div>
+      {{/unless}}
+    {{/if}}
+
   </div>
 </div>

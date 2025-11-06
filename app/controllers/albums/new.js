@@ -13,6 +13,14 @@ export default class AlbumsNewController extends Controller {
   @tracked newGenre = '';
   @tracked newArtistName = '';
 
+  resetForm(){
+    this.newTitle = '';
+    this.newReleaseDate = '';
+    this.newCoverUrl = '';
+    this.newGenre = '';
+    this.newArtistName = '';
+  }
+
   @action
   async createAlbum(e) {
     e.preventDefault();
@@ -20,7 +28,6 @@ export default class AlbumsNewController extends Controller {
     let artist = null;
     if (this.newArtistName.trim()) {
       const artistName = this.newArtistName.trim();
-
       const existingArtists = await this.store.query('artist', {
         filter: { name: artistName },
       });
@@ -44,24 +51,18 @@ export default class AlbumsNewController extends Controller {
     const album = this.store.createRecord('album', attrs);
 
     if (artist) {
-      console.log("test")
       const artists = await album.artists;
       artists.push(artist);
     }
 
     await album.save();
-
-    this.newTitle = '';
-    this.newReleaseDate = '';
-    this.newCoverUrl = '';
-    this.newGenre = '';
-    this.newArtistName = '';
-
+    this.resetForm()
     this.router.transitionTo('albums.detail', album.id);
   }
 
   @action
   cancel() {
+    this.resetForm();
     this.router.transitionTo('albums.index');
   }
 }

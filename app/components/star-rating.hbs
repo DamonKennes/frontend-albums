@@ -1,0 +1,17 @@
+<div class="star-rating {{if @readOnly 'star-rating-readonly' ''}}">
+  {{#each this.stars as |star|}}
+    {{#if @readOnly}}
+      <span class="star {{if (ste star @value) 'star-filled' ''}}">★</span>
+    {{else}}
+      <button
+        type="button"
+        class="star {{if (ste star this.hoverRating) 'star-hover' ''}} {{if (ste star @value) 'star-filled' ''}}"
+        {{on "click" (fn this.selectRating star)}}
+        {{on "mouseenter" (fn this.setHover star)}}
+        {{on "mouseleave" this.clearHover}}
+      >
+        ★
+      </button>
+    {{/if}}
+  {{/each}}
+</div>
