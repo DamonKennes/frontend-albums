@@ -1,4 +1,4 @@
-import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class GebruikerModel extends Model {
   @attr('date') created;
@@ -7,5 +7,4 @@ export default class GebruikerModel extends Model {
 
 
   @belongsTo('useraccount', { async: true, inverse: 'gebruiker' }) useraccount;
-  @hasMany('rating', { async: true, inverse: 'gebruiker' }) ratings;
 }

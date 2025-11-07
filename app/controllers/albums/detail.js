@@ -7,7 +7,6 @@ export default class AlbumsDetailController extends Controller {
   @service store;
   @service router;
   @service session;
-  @service currentUser;
 
   @tracked newRatingText = '';
   @tracked newRatingScore = 0;
@@ -21,13 +20,14 @@ export default class AlbumsDetailController extends Controller {
 
   @action async addRating(e) {
     e?.preventDefault?.();
-    const gebruiker = this.currentUser.user;
+    const useraccountID = this.session.data.authenticated.data.relationships.account.data.id;
+    const useraccount = await this.store.findRecord('useraccount', useraccountID);
     const rating = this.store.createRecord('rating', {
       score: Number(this.newRatingScore),
       text: this.newRatingText,
       creationdate: new Date(),
       album: this.model,
-      gebruiker: gebruiker,
+      useraccount: useraccount,
     });
     await rating.save();
     this.newRatingText = '';
@@ -48,10 +48,15 @@ export default class AlbumsDetailController extends Controller {
 
   @action
   checkRating(rating) {
-    if(this.currentUser.user == null){
+    if(!this.session.isAuthenticated){
       return false
     }
-    return rating.gebruiker.id === this.currentUser.user.id;
+
+    if(rating.useraccount.id === this.session.data.authenticated.data.relationships.account.data.id){
+      this.hasUserRating = true;
+    }
+
+    return rating.useraccount.id === this.session.data.authenticated.data.relationships.account.data.id;;
   }
 
   @action
