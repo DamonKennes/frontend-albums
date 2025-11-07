@@ -9,4 +9,13 @@ export default class AlbumsDetailRoute extends Route {
       include: 'ratings,ratings.useraccount',
     });
   }
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      controller.newRatingText = '';
+      controller.newRatingScore = 0;
+      controller.showDeleteModal = false;
+      controller.hasUserRating = false;
+    }
+  }
 }
