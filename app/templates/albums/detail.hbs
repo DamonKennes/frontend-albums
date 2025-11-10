@@ -63,7 +63,7 @@
               <div class="rating-date">{{rating.creationdate}}</div>
             {{/if}}
             {{#if (this.checkRating rating)}}
-              <button class="button" {{on "click" (fn this.deleteRating rating)}}>Delete</button>
+              <button class="button" type="button" {{on "click" (fn this.deleteRating rating)}}>Delete</button>
             {{/if}}
 
           </li>

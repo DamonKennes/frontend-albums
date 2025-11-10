@@ -40,3 +40,9 @@ function setupTest(hooks, options) {
 }
 
 export { setupApplicationTest, setupRenderingTest, setupTest };
+
+export {
+  authenticateSession,
+  invalidateSession,
+  currentSession,
+} from 'ember-simple-auth/test-support';
