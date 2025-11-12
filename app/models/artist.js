@@ -3,5 +3,5 @@ import { hasMany } from '@ember-data/model';
 
 export default class ArtistModel extends Model {
   @attr('string') name;
-  @hasMany('album', { async: true, inverse: 'artists' }) albums;
+  @hasMany('album', { async: false, inverse: 'artists' }) albums;
 }

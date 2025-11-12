@@ -8,6 +8,6 @@ export default class AlbumModel extends Model {
   @attr('number') averagerating;
 
 
-  @hasMany('artist', { async: true, inverse: 'albums' }) artists;
+  @hasMany('artist', { async: false, inverse: 'albums' }) artists;
   @hasMany('rating', { async: true, inverse: 'album' }) ratings;
 }

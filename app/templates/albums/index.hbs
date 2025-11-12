@@ -1,7 +1,36 @@
 {{page-title "Albums"}}
 
+<div class="filters">
+  <div>
+    <label for="zoekbalk-album"></label>
+    <Input
+      class="zoekbalk"
+      placeholder="Album"
+      @value={{this.albumInput}}
+      id="zoekbalk-album"
+    />
+  </div>
+
+  <div>
+    <label for="zoekbalk-artist"></label>
+    <Input
+      class="zoekbalk"
+      placeholder="Artist"
+      @value={{this.artistInput}}
+      id="zoekbalk-artist"
+    />
+  </div>
+
+  <div>
+    <button type="button" {{on "click" this.resetFilters}} class="button">
+      Reset Filters
+    </button>
+  </div>
+</div>
+
+
 <div class="albums-grid">
-  {{#each @model as |album|}}
+  {{#each this.filteredAlbums as |album|}}
     <AlbumCard @album={{album}} />
   {{else}}
     <p>No albums found.</p>
