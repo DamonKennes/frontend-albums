@@ -16,7 +16,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     assert.strictEqual(controller.newReleaseDate, '', 'newReleaseDate starts empty');
     assert.strictEqual(controller.newCoverUrl, '', 'newCoverUrl starts empty');
     assert.strictEqual(controller.newGenre, '', 'newGenre starts empty');
-    assert.strictEqual(controller.newArtistName, '', 'newArtistName starts empty');
+    assert.deepEqual(controller.artistNames, [''], 'artistNames starts empty');
   });
 
   test('resetForm clears all form fields', function (assert) {
@@ -26,7 +26,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     controller.newReleaseDate = '2024-01-01';
     controller.newCoverUrl = 'http://example.com/cover.jpg';
     controller.newGenre = 'Rock';
-    controller.newArtistName = 'Test Artist';
+    controller.artistNames = ['Test Artist', 'Another Artist'];
 
     controller.resetForm();
 
@@ -34,7 +34,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     assert.strictEqual(controller.newReleaseDate, '', 'newReleaseDate is cleared');
     assert.strictEqual(controller.newCoverUrl, '', 'newCoverUrl is cleared');
     assert.strictEqual(controller.newGenre, '', 'newGenre is cleared');
-    assert.strictEqual(controller.newArtistName, '', 'newArtistName is cleared');
+    assert.deepEqual(controller.artistNames, [''], 'artistNames is cleared');
   });
 
   test('cancel resets form and transitions to albums index', function (assert) {
@@ -42,7 +42,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     const router = this.owner.lookup('service:router');
 
     controller.newTitle = 'Test Album';
-    controller.newArtistName = 'Test Artist';
+    controller.artistNames = ['Test Artist'];
 
     router.transitionTo = function(route) {
       assert.step(`transitioned to ${route}`);
@@ -63,7 +63,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     controller.newReleaseDate = '2024-01-15';
     controller.newCoverUrl = 'http://example.com/cover.jpg';
     controller.newGenre = 'Rock';
-    controller.newArtistName = '';
+    controller.artistNames = [''];
 
     let createdAlbum = null;
     const originalCreateRecord = store.createRecord.bind(store);
@@ -103,7 +103,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     const router = this.owner.lookup('service:router');
 
     controller.newTitle = 'Test Album';
-    controller.newArtistName = 'New Artist';
+    controller.artistNames = ['New Artist'];
 
     let createdArtist = null;
     const albumArtists = [];
@@ -157,7 +157,7 @@ module('Unit | Controller | albums/new', function (hooks) {
     const router = this.owner.lookup('service:router');
 
     controller.newTitle = 'Test Album';
-    controller.newArtistName = 'Existing Artist';
+    controller.artistNames = ['Existing Artist'];
 
     const existingArtist = { id: '1', name: 'Existing Artist' };
     const albumArtists = [];

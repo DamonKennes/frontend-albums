@@ -16,14 +16,35 @@
     </div>
 
     <div class="form-field">
-      <label for="album-artist">Artist/Band</label>
-      <Input
-        @type="text"
-        @value={{this.newArtistName}}
-        id="album-artist"
-        placeholder="Radiohead"
-        required
-      />
+      <label>Artist/Band</label>
+      {{#each this.artistNames key="@index" as |artistName index|}}
+        <div class="artist-input-group">
+          <input
+            type="text"
+            value={{artistName}}
+            {{on "input" (fn this.updateArtistName index)}}
+            placeholder="Radiohead"
+            class="artist-input"
+            required
+          />
+          {{#if (gt this.artistNames.length 1)}}
+            <button
+              type="button"
+              {{on "click" (fn this.removeArtistField index)}}
+              class="button-remove"
+            >
+              −
+            </button>
+          {{/if}}
+        </div>
+      {{/each}}
+      <button
+        type="button"
+        {{on "click" this.addArtistField}}
+        class="button-add"
+      >
+        + Add artist
+      </button>
     </div>
 
     <div class="form-field">

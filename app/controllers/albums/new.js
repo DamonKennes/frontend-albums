@@ -11,33 +11,55 @@ export default class AlbumsNewController extends Controller {
   @tracked newReleaseDate = '';
   @tracked newCoverUrl = '';
   @tracked newGenre = '';
-  @tracked newArtistName = '';
+  @tracked artistNames = [''];
 
-  resetForm(){
+  resetForm() {
     this.newTitle = '';
     this.newReleaseDate = '';
     this.newCoverUrl = '';
     this.newGenre = '';
-    this.newArtistName = '';
+    this.artistNames = [''];
+  }
+
+  @action
+  addArtistField() {
+    this.artistNames = [...this.artistNames, ''];
+  }
+
+  @action
+  removeArtistField(index) {
+    if (this.artistNames.length > 1) {
+      this.artistNames = this.artistNames.filter((_, i) => i !== index);
+    }
+  }
+
+  @action
+  updateArtistName(index, event) {
+    this.artistNames[index] = event.target.value;
   }
 
   @action
   async createAlbum(e) {
     e.preventDefault();
 
-    let artist = null;
-    if (this.newArtistName.trim()) {
-      const artistName = this.newArtistName.trim();
+    const artistNamesTrimmed = this.artistNames
+      .map((name) => name.trim())
+      .filter((name) => name.length > 0);
+
+    const artists = [];
+    for (const artistName of artistNamesTrimmed) {
       const existingArtists = await this.store.query('artist', {
         filter: { name: artistName },
       });
 
+      let artist;
       if (existingArtists.length > 0) {
         artist = existingArtists[0];
       } else {
         artist = this.store.createRecord('artist', { name: artistName });
         await artist.save();
       }
+      artists.push(artist);
     }
 
     const attrs = {
@@ -45,18 +67,18 @@ export default class AlbumsNewController extends Controller {
       releasedate: this.newReleaseDate ? new Date(this.newReleaseDate) : null,
       cover: this.newCoverUrl,
       genre: this.newGenre,
-      averagerating: 0
+      averagerating: 0,
     };
 
     const album = this.store.createRecord('album', attrs);
 
-    if (artist) {
-      const artists = await album.artists;
-      artists.push(artist);
+    if (artists.length > 0) {
+      const albumArtists = await album.artists;
+      artists.forEach((artist) => albumArtists.push(artist));
     }
 
     await album.save();
-    this.resetForm()
+    this.resetForm();
     this.router.transitionTo('albums.detail', album.id);
   }
 

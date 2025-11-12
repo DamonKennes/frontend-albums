@@ -442,6 +442,65 @@
   font-weight: 500;
 }
 
+.artist-input-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.artist-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.artist-input:focus {
+  outline: none;
+  border-color: orange;
+}
+
+.button-add {
+  background-color: #28a745;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.button-add:hover {
+  background-color: #218838;
+}
+
+.button-remove {
+  background-color: #dc3545;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-remove:hover {
+  background-color: #c82333;
+}
+
 /* stars */
 .star-rating {
   display: flex;
@@ -490,10 +549,10 @@
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  animation: fadeIn 0.2s ease;
+  animation: fade-in 0.2s ease;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
   }
@@ -509,10 +568,10 @@
   box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
   max-width: 500px;
   width: 90%;
-  animation: slideIn 0.3s ease;
+  animation: slide-in 0.3s ease;
 }
 
-@keyframes slideIn {
+@keyframes slide-in {
   from {
     transform: translateY(-50px);
     opacity: 0;
