@@ -1,0 +1,27 @@
+
+<div class="form-field">
+  <label for="login-nickname">Username</label>
+  <Input
+    @type="text"
+    @value={{this.nickname}}
+    id="login-nickname"
+    placeholder="username"
+    required
+  />
+</div>
+
+<div class="form-field">
+  <label for="login-password">Password</label>
+  <Input
+    @type="text"
+    @value={{this.password}}
+    id="login-password"
+    placeholder="*****"
+    required
+  />
+</div>
+<p>{{this.errorMessage}}</p>
+
+<div>
+  <button type="button" class="button" {{on 'click' this.login}}>Login</button>
+</div>

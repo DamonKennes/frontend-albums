@@ -9,28 +9,28 @@
   {{/if}}
 </div>
 <form class="registration-form" {{on "submit" this.register}}>
-  <div class="registration-form-name">
+  <div class="form-field">
     <label>
       Name
       <Input @value={{this.name}} placeholder="John Doe" />
     </label>
   </div>
-  <div class="registration-form-nickname">
+  <div class="form-field">
     <label>
       Username
       <Input @value={{this.nickname}} placeholder="john.doe" />
     </label>
   </div>
-  <div class="registration-form-password">
+  <div class="form-field">
     <label>
       Password
-      <Input @value={{this.password}} @type="password" />
+      <Input @value={{this.password}} @type="password" placeholder="*****" />
     </label>
   </div>
-  <div class="registration-form-password-confirmation">
+  <div class="form-field">
     <label>
       Confirm password
-      <Input @value={{this.passwordConfirmation}} @type="password" />
+      <Input @value={{this.passwordConfirmation}} @type="password" placeholder="*****" />
     </label>
   </div>
   <button type="submit">Register</button>
