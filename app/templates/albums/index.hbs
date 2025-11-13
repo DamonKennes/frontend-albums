@@ -21,6 +21,19 @@
     />
   </div>
 
+  {{#if this.session.isAuthenticated}}
+    <div>
+      <label for="checkbox-rated">
+        <Input
+          @type="checkbox"
+          @checked={{this.ratedFilter}}
+          id="checkbox-rated"
+        />
+        Rated Albums
+      </label>
+    </div>
+  {{/if }}
+
   <div>
     <button type="button" {{on "click" this.resetFilters}} class="button">
       Reset Filters

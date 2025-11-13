@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
@@ -8,15 +8,34 @@ export default class AlbumsIndexController extends Controller {
 
   @tracked albumInput = '';
   @tracked artistInput = '';
+  @tracked ratedFilter = false;
 
   @action
   resetFilters() {
     this.albumInput = '';
     this.artistInput = '';
+    this.ratedFilter = false;
   }
 
   get filteredAlbums() {
-    return this.model.filter(
+    let albums = this.model;
+
+    if (this.ratedFilter) {
+      albums = albums.filter((item) => {
+        let ratings = item.hasMany('ratings').value();
+        return (
+          ratings &&
+          ratings.some(
+            (rating) =>
+              rating.useraccount.id ===
+              this.session.data.authenticated.data.relationships.account.data
+                .id,
+          )
+        );
+      });
+    }
+
+    return albums.filter(
       (a) =>
         a.title.toLowerCase().includes(this.albumInput.toLowerCase()) &&
         a.artists.some((artist) =>
